@@ -1,13 +1,16 @@
 <?php
-$servername = "localhost";
-$database = "crud_market";
-$username = "root";
-$password = "";
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $database);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
-echo "Connected successfully";
+$host = 'localhost';
+$dbname = 'crud_market';
+$username = 'root';
+$password = '';
+
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
+}
 ?>
